@@ -1,0 +1,147 @@
+{% include 'admin/header.html' %}
+ <div class="container-fluid">
+    <div class="indeed">
+    	<div class="row">
+    		<div class="col-md-12">
+          <h3 class="text-dark">Akurasi</h3>
+    			<div class="card">
+    				<div class="card-body">
+    					<canvas id="myAccuracy" style="width: 100%"></canvas>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>  
+    <div class="indeed">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class=" text-dark">Best K</h3>
+          <div class="card">
+            <div class="card-body">
+              <canvas id="myChart" style="width: 100%"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+</div>
+
+{% include 'admin/footer.html' %}
+
+<script type="text/javascript">
+// do not resize the chart canvas when its container does (keep at 600x400px)
+Chart.defaults.global.responsive = false;
+
+// akurasi mse dan mae chart
+new Chart( document.getElementById("myAccuracy"), {
+      type: 'bar',
+      data: {
+        labels: ["Akurasi", "MSE", "MAE"],
+        datasets: [
+         {
+          label: 'Akurasi, MSE dan MAE',
+          data: [{% for item in values_Ac %}
+                        {{item }},
+                      {% endfor %}],
+          backgroundColor: ['rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)'],
+          borderColor: ['rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)'],
+          borderWidth: 1,
+          fill:false
+        },
+        //  {
+        //   label: 'MSE',
+        //   data: [16],
+        //   backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        //   borderColor: 'rgba(54, 162, 235, 1)',
+        //   borderWidth: 1,
+        //   fill:false
+        // },
+        //  {
+        //   label: ['MAE'],
+        //   data: [16],
+        //   backgroundColor: ['rgba(255, 206, 86, 0.2)'],
+        //   borderColor: ['rgba(255, 206, 86, 1)'],
+        //   borderWidth: 1
+        // },
+        ]
+      },
+      options: {
+        legend:{display:false},
+        responsive: false,
+        title:{
+          display:true,
+          text:"Akurasi,MSE dan MAE"
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: 100,
+              min: 0
+            }
+          }]
+        }
+      }
+    });
+
+
+// best K chart
+new Chart(document.getElementById("myChart"), {
+  type: 'line',
+  data: {
+        
+            labels : [{% for item in labels_K %}
+                       {{item}},
+                      {% endfor %}],
+            datasets : [{
+              label: '{{ legend_K }}',
+              fill: true,
+              lineTension: 0.1,
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: "#3498db",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,1)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data : [{% for item in values_K %}
+                        {{item * 100 }},
+                      {% endfor %}],
+              spanGaps: false
+        }]
+    },
+    options: {
+        responsive: false,
+        scales: {
+          xAxes: [{
+            ticks: {
+              maxRotation: 100,
+              minRotation: 0
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: 100,
+              min: 0
+            }
+          }]
+        }
+      }
+  });
+ 
+
+
+</script>
+
+
+
+

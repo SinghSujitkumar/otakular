@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MRI Classification - Sign Up</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap/dist/css/bootstrap.min.css')}} ">
+	<link rel="stylesheet" type="text/css" href="
+	{{ url_for('static',filename='style.css')}}">
+</head>
+<body class="container transparant">
+			<form method="post" action="/register_process">
+				<div class="row" style="margin-top: 2%">
+					<div class="col-md-3"></div>
+					<div class="col-md-6">
+						<h2 align="center">Sign Up</h2>
+						{% with messages = get_flashed_messages(with_categories=true) %}
+							{% if messages %}
+								
+								{% for category,message in messages %}
+								<div class="alert alert-{{category}}">{{ message }}</div>
+								{% endfor %}
+							{% endif %}
+						{% endwith %}
+						<div class="card">
+							<div class="card-body">
+								<div class="form-group">
+									<label>Full Name</label> <label id="error_fullname"></label>
+									<input type="text" name="fullname" id="fullname" class="form-control flat" placeholder="Admin Otak Ular" required="required" minlength="2" onchange="checknumb('fullname','fullname','Name')">
+								</div>
+								<div class="form-group">
+									<label>Username</label> <label id="error_username"></label>
+									<input type="text" name="username" id="username" class="form-control flat" placeholder="admin123" required="required" minlength="8">
+								</div>
+								<!-- end form group -->
+								<div class="form-group">
+									<label>Email</label>
+									<input type="email" name="email" id="email" class="form-control flat" placeholder="example@gmail.com" required="required">
+								</div>
+								<!-- end form-group -->
+								<div class="form-group">
+									<label>Password</label> <label class="small"></label>
+									<input type="password" name="password" class="form-control flat" placeholder="Your Password" required="required" id="password" minlength="8">
+								</div>
+										<!-- end form-group -->
+								<div class="form-group">
+									<label>Confirm Password</label> <label class="small"></label>
+									<input type="password" name="repassword" class="form-control flat" placeholder="Tipe Your confirm Password" required="required" id="repassword" onchange ="checkpass()" minlength="8">
+								</div>
+								<div class="form-group">
+									<input type="checkbox" name="showpass" id="showpass"> Show Password
+								</div>
+									<!-- end formgroup -->
+									<center><button class="btn btn-primary btn-block btn-md flat" id="register" readonly="true">Register</button></center>
+									<a href="/" class="btn btn-link btn-md">Have an account ? Log in </a>
+							</div>
+						</div>
+						<!-- end card -->
+					</div>
+					<!-- end col-md-4 -->
+				</div>
+				<!-- end row-->
+			</form>
+			<!-- end form -->
+</body>
+
+<!-- jquery for checking password -->
+<script type="text/javascript" src="{{url_for('static', filename='bootstrap/dist/js/jquery-3.4.1.min.js')}} "></script>
+<script type="text/javascript">
+	//fungsi untuk memperlihatkan password
+	$(document).ready(function(){
+		var disablesubmit = false;
+		$("#register").prop('disabled',true);
+		$("#showpass").click(function(){
+			if($(this).is(':checked')){
+				$("#password").attr('type','text');
+				$("#repassword").attr('type','text');
+			}else{
+				$("#password").attr('type','password');
+				$("#repassword").attr('type','password');
+			}
+		});
+
+	});
+
+	// fungsi untuk mengecek kesamaan password
+	function checkpass()
+	{
+		password = $("#password").val();
+		repassword = $("#repassword").val();
+		console.log(password+' '+repassword);
+
+		if(password!=repassword){
+			$(".small").html('Password Not Same !!');
+			$(".small").css('color','red');
+			$("#password").css('border-color','red');
+			$("#repassword").css('border-color','red');
+			disablesubmit(true);
+
+		}else{
+			$(".small").html('');
+			disablesubmit(false);
+			$("#password").css('border-color','green');
+			$("#repassword").css('border-color','green');
+		}
+	}
+
+	// fungsi untuk mengecek angka
+	function checknumb(var_isi,var_id,var_error)
+	{
+		var karakter = $("#"+var_isi).val();
+		var pola = new RegExp(/^[a-z A-Z]+$/);
+		console.log(pola.test(karakter));
+		$("#error_fullname").html('');
+		if(karakter.length > 0)
+		{
+			if (pola.test(karakter)==false) 
+			{
+				$("#error_"+var_id).html(var_error+' not allowed numbers !!');
+				$("#error_"+var_id).css('color','red');
+				disablesubmit(true);
+			}else{
+				disablesubmit(false);
+				$("#error_"+var_id).html('');
+			}
+		}else {
+			disablesubmit(true);
+			$("#error_"+id).html('');
+		}
+		
+	}
+
+	function disablesubmit(disableornot)
+	{
+		if (disableornot==false) 
+		{
+			$("#register").prop('disabled',false);
+		}else{
+			$("#register").prop('disabled',true);
+		}
+	}
+</script>
+</html>

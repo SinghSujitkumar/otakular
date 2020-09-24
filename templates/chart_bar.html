@@ -1,0 +1,51 @@
+{% include 'admin/header.html' %}
+<canvas id="myChart" width="400" height="400"></canvas>
+<style type="text/css">
+	body {
+  background-color: #a3d5d3;
+}
+</style>
+{% include 'admin/footer.html' %}
+<script type="text/javascript">
+	var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+		  type: 'bar',
+		  data: {
+		    labels: ["Akurasi", "MSE", "MAE"],
+		    datasets: [{
+		      label: 'Akurasi, MSE dan MAE',
+		      data: [80.0, 16, 16],
+		      backgroundColor: [
+		        'rgba(255, 99, 132, 0.2)',
+		        'rgba(54, 162, 235, 0.2)',
+		        'rgba(255, 206, 86, 0.2)',
+		      ],
+		      borderColor: [
+		        'rgba(255,99,132,1)',
+		        'rgba(54, 162, 235, 1)',
+		        'rgba(255, 206, 86, 1)',
+		      ],
+		      borderWidth: 1
+		    }]
+		  },
+		  options: {
+		    responsive: false,
+		    scales: {
+		      xAxes: [{
+		        ticks: {
+		          maxRotation: 100,
+		          minRotation: 0
+		        }
+		      }],
+		      yAxes: [{
+		        ticks: {
+		          beginAtZero: true,
+		          max: 100,
+		          min: 0
+		        }
+		      }]
+		    }
+		  }
+		});
+
+</script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MRI Classification - Log in</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap/dist/css/bootstrap.min.css')}} ">
+	<link rel="stylesheet" type="text/css" href="
+	{{ url_for('static',filename='style.css')}}">
+
+	<link rel="stylesheet" type="text/css" href="
+	{{ url_for('static',filename='animate.css')}}">
+</head>
+<body class="container transparant">
+	<!-- login view -->
+
+	<div class="row" style="margin-top: 15%">
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-4">
+			<h4 align="center" style="margin-bottom: 5%" class="">MRI Brain Tumor Classifications</h4>
+			{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category, message in messages %}
+						<div class="alert alert-{{category}} animated zoomIn">{{ message }}</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			<div class="card">				
+				<div class="card-body">
+					<form method="post" action="/login">
+					<div class="form-group">
+						<label>Username</label>
+						<input type="text" name="username" class="form-control flat" placeholder="username or email" required="required">
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input type="password" name="password" class="form-control flat" placeholder="Password...." required="required">
+					</div>
+					<div class="form-group" align="center">
+						<!-- <button type="submit" name="submit" class="btn btn-primary btn-md flat">Login</button> -->
+						<button type="submit" class="btn btn-primary btn-md btn-block flat">Login</button>
+						<!-- <button type="reset" name="reset" class="btn btn-success btn-md flat">Reset</button> -->
+					</div>
+					</form>
+					<a href="/signup" class="btn btn-link btn-md">Not have an Account ? Register here </a>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="col-md-4"></div> -->
+	</div>
+</body>
+</html>

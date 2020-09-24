@@ -1,0 +1,73 @@
+{% include 'admin/header.html' %}
+ <div class="container-fluid">
+    <div class="indeed">
+    	<div class="row">
+    		<div class="col-md-12">
+    			{% with messages = get_flashed_messages(with_categories=true) %}
+	                {% if messages %}
+	                    
+	                    {% for category,message in messages %}
+	                       <div class="alert alert-{{category}}"> {{ message}}</div>
+	                    {% endfor %}
+	                {% endif %}
+            	{% endwith %}
+            	<h3 class="text-dark card" style="background-color: transparent; border: 0px;">Classifications Data</h3>
+    			<div class="card">
+    				<div class="card-body">
+    					<div class="card-title">
+    						
+    					</div>
+    					<div class="table-responsive">
+		    				<table class="table table-bordered table-condensed table-striped" id="datatable">
+		    					<thead>
+		    						<tr>
+		    							<th>No</th>
+		    							<th>Image</th>
+		    							<th>Contrast</th>
+		    							<th>Energy</th>
+		    							<th>Dissimilarity</th>
+		    							<th>Homogeinity</th>
+		    							<th>Correlation</th>
+		    							<th>Result</th>
+		    							<th>Uploaded By</th>
+		    							<th>Action</th>
+		    						</tr>
+		    					</thead>
+		    					<tbody>
+		    						{% set id= 1 %}
+		    						{% for x in data %}
+		    							<tr>
+		    								<td>{{x[0]}}</td>
+		    								<td>
+		    									<img src="{{ url_for('static',filename='image_resources/'+x[1])}}" class="img-thumbnail" onclick="viewImg('{{x[1]}}')" style="width: 100px;height: 100px" id="{{x[1]}}">
+		    								</td>
+		    								<td>{{x[2]}}</td>
+		    								<td>{{x[3]}}</td>
+		    								<td>{{x[4]}}</td>
+		    								<td>{{x[5]}}</td>
+		    								<td>{{x[6]}}</td>
+		    								<td>{{x[7]}}</td>
+		    								<td>{{x[11]}}</td>
+		    								<td>{% if x[9] == session['user_id'] %}
+		    									<a href="/deleteMRI/{{x[0]}}" class="btn btn-danger btn-sm" onclick="return confirm('Anda Yakin ??');">Delete</a>
+		    									{% endif %}
+
+		    								</td>
+		    							</tr>
+		    									{% set id = id + 1 %}
+		    								
+		    						{% endfor %}
+		    					</tbody>
+		    				</table>
+		    			</div>
+		    			<!-- end table-responsive -->
+    				</div>
+    			</div>
+    		</div>
+    		<!-- end col-md-12 -->
+    	 </div>
+	        <!-- end row -->
+		
+	</div>
+</div>
+{% include 'admin/footer.html' %}

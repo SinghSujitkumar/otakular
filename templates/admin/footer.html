@@ -1,0 +1,49 @@
+ </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title txt-midnight" id="exampleModalLabel">About App</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body txt-alizarin">
+            MRI Brain Tumor Classifications Created and Credit By Jajang
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default bg-gray-child" data-dismiss="modal">Close</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+      </div>
+    <script type="text/javascript" src="{{ url_for( 'static',filename='bootstrap/dist/js/jquery-3.4.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for( 'static',filename='bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for( 'static',filename='bootstrap/dist/js/bootstrap.bundle.js')}}"></script>
+
+    <!-- chart js -->
+    <script type="text/javascript" src="{{ url_for( 'static',filename='bootstrap/dist/js/Chart.min.js')}}"></script>
+    <!-- datatable -->
+    <script type="text/javascript" src="{{ url_for( 'static',filename='bootstrap/dist/js/datatables.min.js')}}"></script>
+    <!-- viewer -->
+    <script type="text/javascript" src="{{ url_for( 'static',filename='viewer/viewer.js')}}"></script>
+    <!-- canvas js -->
+    <script type="text/javascript" src="{{ url_for( 'static',filename='canvas.js')}}"></script>
+
+    <script type="text/javascript" src="{{ url_for( 'static',filename='Chart.js')}}"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#datatable").dataTable();
+      })
+    </script>
+    <script type="text/javascript">
+      function viewImg(ids){
+        new Viewer(document.getElementById(ids))
+      }
+    </script>

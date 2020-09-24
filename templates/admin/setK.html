@@ -1,0 +1,75 @@
+{% include 'admin/header.html' %}
+ <div class="container-fluid">
+    <div class="indeed">
+    	<div class="row">
+        <div class="col-md-3"></div>
+    		<div class="col-md-6">
+          <h3 class="text-dark" align="center">Set K</h3>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                
+                {% for category,message in messages %}
+                <div class="alert alert-{{category}}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+    			<div class="card">
+    				<div class="card-body">
+    					<form method="post" action="/updateK">
+                <div class="form-group">
+                  <label>Nilai K</label> <label id="error"></label>
+                  <input type="number" name="k" class="form-control flat" id="k" required="" maxlength="2" placeholder="Set Your K value" onchange="checknumb('k','k','K val')">
+                </div>
+                <div class="text-center">
+                  <button type="submit" name="submit" class="btn btn-primary flat" id="update">Update</button>
+                </div>
+                
+              </form>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>  
+</div>
+
+{% include 'admin/footer.html' %}
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#update").prop('disabled',true);
+  });
+  function checknumb(var_isi,var_id,var_error)
+  {
+    var karakter = $("#"+var_isi).val();
+    var pola = new RegExp(/^[1-9]+$/);
+    console.log(pola.test(karakter));
+    $("#"+var_isi).html('');
+    // if(karakter.length > 0)
+    // {
+      if (pola.test(karakter)==false) 
+      {
+        $("#"+var_id).html(var_error+' not allowed characters !!');
+        $("#"+var_id).css('color','red');
+        disablesubmit(true);
+      }else{
+        disablesubmit(false);
+        $("#"+var_id).html('');
+      }
+    // }else {
+    //   disablesubmit(true);
+    //   $("#"+var_id).html('');
+    // }
+    
+  }
+
+  function disablesubmit(disableornot)
+  {
+    if (disableornot==false) 
+    {
+      $("#update").prop('disabled',false);
+    }else{
+      $("#update").prop('disabled',true);
+    }
+  }
+</script>

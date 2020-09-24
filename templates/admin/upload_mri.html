@@ -1,0 +1,121 @@
+{% include 'admin/header.html' %}
+ <div class="container-fluid">
+    <div class="indeed">
+    	<div class="row">
+    		<!-- <div class="col-md-1"></div> -->
+    		<div class="col-md-12">
+
+    			<h3 class="text-dark card" style="background-color: transparent; border: 0px;">Upload MRI</h3>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    
+                    {% for category,message in messages %}
+                       <div class="alert alert-{{category}}"> {{ message}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+    			<div class="card">
+    				<div class="card-body">
+    					<form method="post" action="/upload_process" enctype="multipart/form-data">
+    						<input type="file" name="mri_file" accept="image/jpeg,image/jpg" class="btn btn-block flat">
+							<button type="submit" class="btn btn-block btn-sm btn-primary flat">Process</button>
+    					</form>
+    					<hr>
+    					<div class="row chart">
+                            {% if datas is defined and datas|length : %}
+                              
+
+                                    <div class="col-md-3">
+                                        <label>Image Default</label>
+                                        <img src="{{url_for('static',filename='image_resources/'+datas['default'])}}" alt="{{datas['default']}}" class="img-thumbnail" width="200px" height="200px" style="width: 100%;height: 74.1%;">
+                                    </div>
+                                     <div class="col-md-3">
+                                        <label>Image Grayscale</label>
+                                        <img src="{{url_for('static',filename='image_resources/'+datas['grayscale'])}}" alt="{{datas['grayscale']}}" class="img-thumbnail">
+                                    </div>
+                                     <div class="col-md-3">
+                                        <label>Image Threshold</label>
+                                        <img src="{{url_for('static',filename='image_resources/'+datas['threshold'])}}" alt="{{datas['threshold']}}" class="img-thumbnail">
+                                    </div>
+                                     <div class="col-md-3">
+                                        <label>Image Morphology</label>
+                                        <img src="{{url_for('static',filename='image_resources/'+datas['morphology'])}}" alt="{{datas['morphology']}}" class="img-thumbnail">
+                                    </div>
+                             
+                            {% else %}
+                            
+            					<div class="col-md-3">
+                                    <label>Image Default</label>
+            						<img src="{{ url_for('static',filename='img/nophoto.png') }}" alt="..." class="img-thumbnail">
+            					</div>
+            					<div class="col-md-3">
+                                    <label>Image Grayscale</label>
+            						<img src="{{ url_for('static',filename='img/nophoto.png') }}" alt="..." class="img-thumbnail">
+            					</div>
+            					<div class="col-md-3">
+                                    <label>Image Threshold</label>
+            						<img src="{{ url_for('static',filename='img/nophoto.png') }}" alt="..." class="img-thumbnail">
+            					</div>
+            					<div class="col-md-3">
+                                    <label>Image Morphology</label>
+            						<img src="{{ url_for('static',filename='img/nophoto.png') }}" alt="..." class="img-thumbnail">
+            					</div>
+                            {% endif %}
+                            
+    					</div> <!-- end chart-->
+    					<hr>
+    					<h6>Characteristics Feature Extraction</h6><br>
+    					<table class="table_extract table">
+    						<tbody>
+    							<tr>
+    								<td><h6>Contrast</h6></td>
+    								<td><h6>Energy</h6></td>
+    								<td><h6>Correlation</h6></td>
+    								<td><h6>Homogenity</h6></td>
+                                    <td><h6>Entropy</h6></td>
+    							</tr>
+    							<tr>
+                                    {% if extract is defined and datas|length : %}
+                                        {% for value in extract%}
+                                            <td><input type="text" name="" class="form-control flat" readonly="readonly" value="{{value['contrast']}}"></td>
+                                            <td><input type="text" name="" class="form-control flat" readonly="readonly" value="{{value['energy']}}"></td>
+                                            <td><input type="text" name="" class="form-control flat" readonly="readonly" value="{{value['correlation']}}"></td>
+                                            <td><input type="text" name="" class="form-control flat" readonly="readonly" value="{{value['homogeneity']}}"></td>
+                                            <td><input type="text" name="" class="form-control flat" readonly="readonly" value="{{value['entropy']}}"></td>
+                                        {% endfor %}
+                                    {% else %}
+                                        <td><input type="text" name="" class="form-control flat" readonly="readonly"></td>
+                                        <td><input type="text" name="" class="form-control flat" readonly="readonly"></td>
+                                        <td><input type="text" name="" class="form-control flat" readonly="readonly"></td>
+                                        <td><input type="text" name="" class="form-control flat" readonly="readonly"></td>
+                                        <td><input type="text" name="" class="form-control flat" readonly="readonly"></td>
+                                    {% endif %}
+    							</tr>
+    						</tbody>
+    					</table><!-- end table-->
+    					<br><br>
+    					<!-- prediction result -->
+    					<div class="row">
+    						<div class="col-md-1"></div>
+    						<div class="col-md-3"> 
+    							<p class="text-right"> Prediction Result</p>
+    						</div>
+    						<div class="col-md-4">
+    							<input type="text" name="" class="form-control flat" readonly="true" value="{{classification_result}}" style="font-family: arial;font-size: 30px;font-weight: bold;text-align: center;">
+    						</div>
+    						<div class="col-md-4">
+    							<p class="text-right">
+                                    <a href="/upload_mri" class="btn btn-secondary btn-xs flat">Done</a>
+
+                                    <!-- <button type="button" class="btn btn-secondary btn-xs flat">Done</button></p> -->
+    						</div>
+
+    					</div> <!--end row-->
+    				</div> <!-- end card body-->
+    			</div>
+    		</div>
+    	</div> <!-- end row-->
+    </div> <!-- end indeed-->
+
+</div> <!-- end container fluid-->
+{% include 'admin/footer.html' %}
